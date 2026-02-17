@@ -6,8 +6,23 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		ECBD74582F4357E4005E0AAB /* TaskManagementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBD74572F4357E4005E0AAB /* TaskManagementApp.swift */; };
+		ECBD745A2F4357E4005E0AAB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBD74592F4357E4005E0AAB /* ContentView.swift */; };
+		ECBD74672F435841005E0AAB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBD74662F435841005E0AAB /* Task.swift */; };
+		ECBD746A2F4358CE005E0AAB /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBD74692F4358CE005E0AAB /* TaskViewModel.swift */; };
+		ECBD746C2F435AD8005E0AAB /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBD746B2F435AD8005E0AAB /* Home.swift */; };
+		ECD6CD442F44BCB300B866C7 /* date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD6CD432F44BCB000B866C7 /* date.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		ECBD74542F4357E4005E0AAB /* TaskManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECBD74572F4357E4005E0AAB /* TaskManagementApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagementApp.swift; sourceTree = "<group>"; };
+		ECBD74592F4357E4005E0AAB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ECBD74662F435841005E0AAB /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		ECBD74692F4358CE005E0AAB /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		ECBD746B2F435AD8005E0AAB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		ECD6CD432F44BCB000B866C7 /* date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = date.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +47,7 @@
 		ECBD744B2F4357E4005E0AAB = {
 			isa = PBXGroup;
 			children = (
-				ECBD74562F4357E4005E0AAB /* TaskManagement */,
+				ECBD74622F435802005E0AAB /* Shared */,
 				ECBD74552F4357E4005E0AAB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +58,44 @@
 				ECBD74542F4357E4005E0AAB /* TaskManagement.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		ECBD74622F435802005E0AAB /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				ECBD74682F4358B0005E0AAB /* ViewModel */,
+				ECBD74642F435819005E0AAB /* View */,
+				ECBD74572F4357E4005E0AAB /* TaskManagementApp.swift */,
+				ECBD74592F4357E4005E0AAB /* ContentView.swift */,
+				ECBD74632F435813005E0AAB /* Model */,
+				ECBD74562F4357E4005E0AAB /* TaskManagement */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		ECBD74632F435813005E0AAB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ECBD74662F435841005E0AAB /* Task.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECBD74642F435819005E0AAB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ECD6CD432F44BCB000B866C7 /* date.swift */,
+				ECBD746B2F435AD8005E0AAB /* Home.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECBD74682F4358B0005E0AAB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				ECBD74692F4358CE005E0AAB /* TaskViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +172,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECBD745A2F4357E4005E0AAB /* ContentView.swift in Sources */,
+				ECD6CD442F44BCB300B866C7 /* date.swift in Sources */,
+				ECBD746A2F4358CE005E0AAB /* TaskViewModel.swift in Sources */,
+				ECBD746C2F435AD8005E0AAB /* Home.swift in Sources */,
+				ECBD74672F435841005E0AAB /* Task.swift in Sources */,
+				ECBD74582F4357E4005E0AAB /* TaskManagementApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
