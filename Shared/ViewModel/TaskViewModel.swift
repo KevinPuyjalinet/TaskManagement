@@ -23,6 +23,9 @@ class TaskViewModel: ObservableObject {
     //MARK: New Task View
     @Published var addNewTask: Bool = false
     
+    //MARK: Edit Data
+    @Published var editTask: Task?
+    
     //MARK: Initializing
     init() {
         fetchCurrentWeek()
@@ -61,6 +64,7 @@ class TaskViewModel: ObservableObject {
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: date)
         let currentHour = calendar.component(.hour, from: Date())
-        return hour == currentHour
+        let isToday = calendar.isDateInToday(date)
+        return (hour == currentHour && isToday)
     }
 }

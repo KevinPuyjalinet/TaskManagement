@@ -11,7 +11,12 @@ import CoreData
 struct Home: View {
     @StateObject var taskModel: TaskViewModel = TaskViewModel()
     @Namespace var animation
+    
+    //MARK: CoreData Context
     @Environment(\.managedObjectContext) var context
+    
+    //MARK: Edit Button Context
+    @Environment(\.editMode) var editButton
     var body: some View {
         //MARK: - Body
         ScrollView(.vertical, showsIndicators: false) {
@@ -87,7 +92,11 @@ struct Home: View {
             ,alignment: .bottomTrailing
         )
         .sheet(isPresented: $taskModel.addNewTask) {
+            //Clearing Edit Data
+            taskModel.editTask = nil
+        } content : {
             NewTaskView()
+                .environmentObject(taskModel)
         }
     }
     
@@ -107,22 +116,54 @@ struct Home: View {
     //MARK: - Task Card View
     @ViewBuilder
     func TaskCardView(task: Task) -> some View {
-        HStack(alignment: .top, spacing: 30) {
+        //MARK: Since CoreData Values will Give Optional data
+        HStack(alignment: editButton?.wrappedValue == .active ? .center : .top, spacing: 30) {
             
-            //MARK: Since CoreData Values will Give Optional data
-            VStack(spacing: 10) {
-                Circle()
-                    .fill(taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? (task.isCompleted ? .green : .black) : .clear)
-                    .frame(width: 15, height: 15)
-                    .background(
-                        Circle()
-                            .stroke(.black, lineWidth: 1)
-                            .padding(-3)
-                    )
-                    .scaleEffect(!taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? 0.8 : 1)
-                Rectangle()
-                    .fill(.black)
-                    .frame(width: 3)
+            // If Edit mode enable then showing Delete Button
+            if editButton?.wrappedValue == .active {
+                // Edit Button for Current and Future Tasks
+                VStack(spacing: 10) {
+                    
+                    if task.taskDate?.compare(Date()) == .orderedDescending || Calendar.current.isDateInToday(task.taskDate ?? Date()) {
+                        Button {
+                            taskModel.editTask = task
+                            taskModel.addNewTask.toggle()
+                            
+                        } label: {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.title)
+                                .foregroundStyle(.black)
+                        }
+                    }
+                    
+                    Button {
+                        
+                        //Deleting Task
+                        context.delete(task)
+                        
+                        //Saving
+                        try? context.save()
+                    } label: {
+                        Image(systemName: "minus.circle.fill")
+                            .font(.title)
+                            .foregroundStyle(Color.red)
+                    }
+                }
+            } else {
+                VStack(spacing: 10) {
+                    Circle()
+                        .fill(taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? (task.isCompleted ? .green : .black) : .clear)
+                        .frame(width: 15, height: 15)
+                        .background(
+                            Circle()
+                                .stroke(.black, lineWidth: 1)
+                                .padding(-3)
+                        )
+                        .scaleEffect(!taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? 0.8 : 1)
+                    Rectangle()
+                        .fill(.black)
+                        .frame(width: 3)
+                }
             }
             
             VStack {
@@ -145,7 +186,7 @@ struct Home: View {
                                 withAnimation(.easeInOut) {
                                 //MARK: Check Button
                                 Button {
-                                    //Updating Status
+                                    //MARK: Updating Task
                                     task.isCompleted = true
                                     //Saving
                                     try? context.save()
@@ -190,6 +231,9 @@ struct Home: View {
                     .font(.largeTitle.bold())
             }
             .hLeading()
+            
+            //MARK: Edit Button
+            EditButton()
             
             Button {
                 

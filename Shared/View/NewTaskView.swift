@@ -18,6 +18,7 @@ struct NewTaskView: View {
     
     //MARK: Core Data Context
     @Environment(\.managedObjectContext) var context
+    @EnvironmentObject var taskModel: TaskViewModel
     var body: some View {
         NavigationStack {
             List {
@@ -31,12 +32,15 @@ struct NewTaskView: View {
                 } header: {
                     Text("Task Description")
                 }
-                Section {
-                    DatePicker("", selection: $taskDate)
-                        .datePickerStyle(.graphical)
-                        .labelsHidden()
-                } header: {
-                    Text("Task Date")
+                // Disabling Date for edit Mode
+                if taskModel.editTask == nil {
+                    Section {
+                        DatePicker("", selection: $taskDate)
+                            .datePickerStyle(.graphical)
+                            .labelsHidden()
+                    } header: {
+                        Text("Task Date")
+                    }
                 }
             }
             .listStyle(.insetGrouped)
@@ -49,10 +53,15 @@ struct NewTaskView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         
-                        let task = Task(context: context)
-                        task.taskTitle = taskTitle
-                        task.taskDesc = taskDesc
-                        task.taskDate = taskDate
+                        if let task = taskModel.editTask {
+                            task.taskTitle = taskTitle
+                            task.taskDesc = taskDesc
+                        } else {
+                            let task = Task(context: context)
+                            task.taskTitle = taskTitle
+                            task.taskDesc = taskDesc
+                            task.taskDate = taskDate
+                        }
                         
                         // Saving
                         try? context.save()
@@ -68,10 +77,19 @@ struct NewTaskView: View {
                     }
                 }
             }
+            // Loading Task data if from Edit
+            .onAppear {
+                if let task = taskModel.editTask {
+                    taskTitle = task.taskTitle ?? ""
+                    taskDesc = task.taskDesc ?? ""
+                    
+                }
+            }
         }
     }
 }
 
 #Preview {
     NewTaskView()
+        .environmentObject(TaskViewModel())
 }
